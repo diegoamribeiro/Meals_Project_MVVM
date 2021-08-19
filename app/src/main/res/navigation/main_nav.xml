@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav"
+    app:startDestination="@id/categoriesFragment">
+    <fragment
+        android:id="@+id/categoriesFragment"
+        android:name="com.diegoribeiro.mealsproject.ui.categories.CategoriesFragment"
+        android:label="fragment_categories"
+        tools:layout="@layout/fragment_categories" >
+        <action
+            android:id="@+id/action_categoriesFragment_to_mealsFragment"
+            app:destination="@id/mealsFragment" />
+        <action
+            android:id="@+id/action_categoriesFragment_to_favoriteFragment"
+            app:destination="@id/favoriteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mealsFragment"
+        android:name="com.diegoribeiro.mealsproject.ui.meals.MealsFragment"
+        android:label="fragment_meals"
+        tools:layout="@layout/fragment_meals" >
+        <action
+            android:id="@+id/action_mealsFragment_to_categoriesFragment"
+            app:destination="@id/categoriesFragment" />
+        <action
+            android:id="@+id/action_mealsFragment_to_recipeFragment"
+            app:destination="@id/recipeFragment" />
+        <argument
+            android:name="currentCategory"
+            app:argType="com.diegoribeiro.mealsproject.data.model.Category" />
+    </fragment>
+    <fragment
+        android:id="@+id/recipeFragment"
+        android:name="com.diegoribeiro.mealsproject.RecipeFragment"
+        android:label="fragment_recipe"
+        tools:layout="@layout/fragment_recipe" >
+        <action
+            android:id="@+id/action_recipeFragment_to_mealsFragment"
+            app:destination="@id/mealsFragment" />
+        <action
+            android:id="@+id/action_recipeFragment_to_favoriteFragment"
+            app:destination="@id/favoriteFragment" />
+        <argument
+            android:name="currentMeal"
+            app:argType="com.diegoribeiro.mealsproject.data.model.Meal" />
+    </fragment>
+    <fragment
+        android:id="@+id/favoriteFragment"
+        android:name="com.diegoribeiro.mealsproject.FavoriteFragment"
+        android:label="fragment_favorite"
+        tools:layout="@layout/fragment_favorite" >
+        <action
+            android:id="@+id/action_favoriteFragment_to_categoriesFragment"
+            app:destination="@id/categoriesFragment" />
+        <action
+            android:id="@+id/action_favoriteFragment_to_recipeFragment"
+            app:destination="@id/recipeFragment" />
+    </fragment>
+</navigation>
