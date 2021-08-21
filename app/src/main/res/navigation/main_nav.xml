@@ -33,7 +33,7 @@
     </fragment>
     <fragment
         android:id="@+id/recipeFragment"
-        android:name="com.diegoribeiro.mealsproject.RecipeFragment"
+        android:name="com.diegoribeiro.mealsproject.ui.recipes.RecipeFragment"
         android:label="fragment_recipe"
         tools:layout="@layout/fragment_recipe" >
         <action

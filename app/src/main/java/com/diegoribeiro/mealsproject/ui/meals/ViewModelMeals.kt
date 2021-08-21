@@ -9,7 +9,7 @@ import com.diegoribeiro.mealsproject.data.repository.Repository
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
-class ViewModelMeals: ViewModel() {
+class ViewModelMeals : ViewModel() {
 
     private val repository = Repository
     val listMeals: MutableLiveData<ResourceNetwork<Meals>> = MutableLiveData()
@@ -19,7 +19,7 @@ class ViewModelMeals: ViewModel() {
         listMeals
     }
 
-    fun getMealsByCategory(category: String){
+    fun getMealsByCategory(category: String) {
         viewModelScope.launch {
             listMeals.postValue(ResourceNetwork.Loading())
             val response = repository.getAllMealsByCategory(category)
@@ -27,11 +27,10 @@ class ViewModelMeals: ViewModel() {
         }
     }
 
-
-    private fun handleMealsResponse(response: Response<Meals>): ResourceNetwork<Meals>{
-        if (response.isSuccessful){
-            response.body()?.let { resultResponse->
-                if (mealsResponse == null){
+    private fun handleMealsResponse(response: Response<Meals>): ResourceNetwork<Meals> {
+        if (response.isSuccessful) {
+            response.body()?.let { resultResponse ->
+                if (mealsResponse == null) {
                     mealsResponse = resultResponse
                 }
                 return ResourceNetwork.Success(mealsResponse ?: resultResponse)
@@ -39,5 +38,4 @@ class ViewModelMeals: ViewModel() {
         }
         return ResourceNetwork.Error(response.message())
     }
-
 }

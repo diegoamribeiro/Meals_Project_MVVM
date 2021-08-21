@@ -31,9 +31,7 @@ class MealsFragment : Fragment() {
         setupRecyclerView()
         loadViewModel()
 
-
         Toast.makeText(requireContext(), args.currentCategory.strCategory, Toast.LENGTH_LONG).show()
-
         return binding.root
     }
 
