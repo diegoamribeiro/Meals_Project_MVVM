@@ -21,7 +21,7 @@ class ViewModelMeals : ViewModel() {
 
     fun getMealsByCategory(category: String) {
         viewModelScope.launch {
-            listMeals.postValue(ResourceNetwork.Loading())
+            //listMeals.postValue(ResourceNetwork.Loading())
             val response = repository.getAllMealsByCategory(category)
             listMeals.postValue(handleMealsResponse(response))
         }
