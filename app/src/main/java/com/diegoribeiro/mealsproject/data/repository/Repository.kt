@@ -14,7 +14,7 @@ object Repository {
        return RemoteClient.getService().getAllMealsByCategory(category)
     }
 
-    suspend fun getMealById(id: String): Response<Meal>{
+    suspend fun getMealById(id: String): Meals{
         return RemoteClient.getService().getAllMealsById(id)
     }
 

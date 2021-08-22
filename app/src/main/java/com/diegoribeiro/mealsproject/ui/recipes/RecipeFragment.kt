@@ -26,34 +26,26 @@ class RecipeFragment : Fragment() {
     ): View {
         binding = FragmentRecipeBinding.inflate(layoutInflater, container, false)
         viewModelRecipes = ViewModelRecipes()
-//        //binding.tvLabelModoPreparo.text = args.currentMeal.strInstructions
-//        Log.d("***Recipe", args.currentMeal.strCategory)
-        getMealById()
+        handleObserver()
+        viewModelRecipes.getMealById(args.currentMeal.idMeal)
+        Log.d("***Recipe", args.currentMeal.idMeal)
+
+
 
         return binding.root
     }
 
-    private fun getMealById(){
-        Log.d("***Recipe", args.currentMeal.idMeal)
-        viewModelRecipes.getMealById(args.currentMeal.idMeal)
+    private fun handleObserver(){
         viewModelRecipes.mealById.observe(viewLifecycleOwner, {response->
-            when(response){
-                is ResourceNetwork.Success->{
-                    response.data?.let { meal->
 
-                        binding.tvTitle.text = meal.idMeal
-                        Glide.with(binding.ivDetails)
-                            .load(meal.strMealThumb)
-                            .transition(DrawableTransitionOptions.withCrossFade())
-                            .into(binding.ivDetails)
-
-                    }
-                }
-                is ResourceNetwork.Error->{
-                    response.message?.let{message->
-                        Toast.makeText(requireContext(), "Error $message", Toast.LENGTH_LONG).show()
-                    }
-                }
+            response.meals.let { recipe->
+                Log.d("***Recipe", recipe.toString())
+                binding.tvTitle.text = recipe[0].strMeal
+                binding.tvInstructions.text = recipe[0].strInstructions
+                Glide.with(binding.ivDetails)
+                    .load(recipe[0].strMealThumb)
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .into(binding.ivDetails)
             }
         })
     }

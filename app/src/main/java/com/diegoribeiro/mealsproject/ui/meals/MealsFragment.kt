@@ -51,7 +51,6 @@ class MealsFragment : Fragment() {
                     binding.rvMeals.hideShimmer()
                     response.data?.let { result ->
                         mAdapterMeals.setData(result.meals)
-                        Log.d("***Meals", result.meals.toString())
                     }
                 }
                 is ResourceNetwork.Error -> {

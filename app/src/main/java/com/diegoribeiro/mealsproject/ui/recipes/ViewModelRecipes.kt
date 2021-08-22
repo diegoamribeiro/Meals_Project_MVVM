@@ -12,8 +12,8 @@ import retrofit2.Response
 
 class ViewModelRecipes: ViewModel() {
     private var repository = Repository
-    val mealById: MutableLiveData<ResourceNetwork<Meal>> = MutableLiveData()
-    private var mealResponse: Meal? = null
+    val mealById: MutableLiveData<Meals> = MutableLiveData()
+    //private var mealResponse: Meal? = null
 
     init{
         mealById
@@ -21,24 +21,24 @@ class ViewModelRecipes: ViewModel() {
 
     fun getMealById(id: String){
         viewModelScope.launch {
-            val response = repository.getMealById(id)
-            mealById.postValue(handleResponse(response))
-            //mealById.postValue(ResourceNetwork.Loading())
-        }
-    }
-
-
-    private fun handleResponse(response: Response<Meal>): ResourceNetwork<Meal>{
-        if (response.isSuccessful){
-            response.body()?.let { resultResponse->
-                if (mealResponse == null){
-                    mealResponse = resultResponse
-                }
-                return ResourceNetwork.Success(mealResponse ?: resultResponse)
+            repository.getMealById(id).let { meal ->
+                mealById.postValue(meal)
             }
         }
-        return ResourceNetwork.Error(response.message())
     }
+
+
+//    private fun handleResponse(response: Response<Meal>): Meal{
+//        if (response.isSuccessful){
+//            response.body()?.let { resultResponse->
+//                if (mealResponse == null){
+//                    mealResponse = resultResponse
+//                }
+//                return ResourceNetwork.Success(mealResponse ?: resultResponse)
+//            }
+//        }
+//        return ResourceNetwork.Error(response.message())
+//    }
 
 
 
