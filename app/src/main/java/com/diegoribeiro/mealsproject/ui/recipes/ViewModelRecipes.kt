@@ -1,5 +1,6 @@
 package com.diegoribeiro.mealsproject.ui.recipes
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -27,6 +28,7 @@ class ViewModelRecipes: ViewModel() {
             repository.getMealById(id).let { recipes ->
                 mealById.postValue(recipes)
                 ingredient.postValue(recipes.meals[0].filterBlankIngredient())
+                Log.d("**ViewModel", recipes.meals[0].filterBlankIngredient().toString())
             }
         }
     }
