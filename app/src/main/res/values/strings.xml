@@ -5,5 +5,5 @@
     <string name="categoryimage">CategoryImage</string>
     <string name="image_details">Image Details</string>
     <string name="button_like">Button Like</string>
-    <string name="modo_de_preparo">Modo de Preparo</string>
+    <string name="ingredients">Ingredients</string>
 </resources>

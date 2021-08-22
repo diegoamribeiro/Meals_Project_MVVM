@@ -47,6 +47,24 @@ class RecipeFragment : Fragment() {
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .into(binding.ivDetails)
             }
+
+//            when(response){
+//                is ResourceNetwork.Success->{
+//                    response.data?.let { meal->
+//
+
+//
+//                    }
+//                }
+//                is ResourceNetwork.Error->{
+//                    response.message?.let{message->
+//                        Toast.makeText(requireContext(), "Error $message", Toast.LENGTH_LONG).show()
+//                    }
+//                }
+//                is ResourceNetwork.Loading->{
+//                    Toast.makeText(requireContext(), "Loading...", Toast.LENGTH_LONG).show()
+//                }
+//            }
         })
     }
 }
