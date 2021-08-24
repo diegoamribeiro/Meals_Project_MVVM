@@ -13,7 +13,7 @@ object Repository {
        return RemoteClient.getService().getAllMealsByCategory(category)
     }
 
-    suspend fun getMealById(id: String): Recipes{
+    suspend fun getMealById(id: String): Response<Recipes>{
         return RemoteClient.getService().getAllMealsById(id)
     }
 

@@ -57,12 +57,12 @@ class RecipeFragment : Fragment() {
 
     private fun handleObserver(){
         viewModelRecipes.recipeById.observe(viewLifecycleOwner, { response->
-            response.meals.let { recipe->
+            response.data.let { recipe->
                 Log.d("***Recipe", recipe.toString())
-                binding.tvTitle.text = recipe[0].strMeal
-                binding.tvInstructions.text = recipe[0].strInstructions
+                binding.tvTitle.text = recipe!!.meals[0].strMeal
+                binding.tvInstructions.text = recipe.meals[0].strInstructions
                 Glide.with(binding.ivDetails)
-                    .load(recipe[0].strMealThumb)
+                    .load(recipe.meals[0].strMealThumb)
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .into(binding.ivDetails)
             }
