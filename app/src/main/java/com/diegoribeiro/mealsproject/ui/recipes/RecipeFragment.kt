@@ -1,24 +1,29 @@
 package com.diegoribeiro.mealsproject.ui.recipes
 
 import android.os.Bundle
+import android.os.MessageQueue
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.diegoribeiro.mealsproject.data.remote.ResourceNetwork
 import com.diegoribeiro.mealsproject.databinding.FragmentRecipeBinding
 
 
 class RecipeFragment : Fragment() {
 
+
     private lateinit var viewModelRecipes: ViewModelRecipes
     private val args: RecipeFragmentArgs by navArgs()
     private lateinit var binding: FragmentRecipeBinding
+    private val ingredientAdapter: IngredientAdapter by lazy { IngredientAdapter() }
+    private lateinit var recyclerView: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,15 +34,29 @@ class RecipeFragment : Fragment() {
         handleObserver()
         viewModelRecipes.getMealById(args.currentMeal.idMeal)
         Log.d("***Recipe", args.currentMeal.idMeal)
-
+        setupRecyclerView()
 
 
         return binding.root
     }
 
-    private fun handleObserver(){
-        viewModelRecipes.mealById.observe(viewLifecycleOwner, {response->
+    private fun setupRecyclerView(){
+        recyclerView = binding.rvList
+        recyclerView.adapter = ingredientAdapter
+        recyclerView.layoutManager = object : LinearLayoutManager(requireContext()){
+            override fun canScrollVertically(): Boolean { return false }
+        }
 
+        viewModelRecipes.ingredient.observe(viewLifecycleOwner,{listIngredients->
+            listIngredients.let { result->
+                ingredientAdapter.setData(result)
+            }
+        })
+    }
+
+
+    private fun handleObserver(){
+        viewModelRecipes.recipeById.observe(viewLifecycleOwner, { response->
             response.meals.let { recipe->
                 Log.d("***Recipe", recipe.toString())
                 binding.tvTitle.text = recipe[0].strMeal
@@ -47,24 +66,6 @@ class RecipeFragment : Fragment() {
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .into(binding.ivDetails)
             }
-
-//            when(response){
-//                is ResourceNetwork.Success->{
-//                    response.data?.let { meal->
-//
-
-//
-//                    }
-//                }
-//                is ResourceNetwork.Error->{
-//                    response.message?.let{message->
-//                        Toast.makeText(requireContext(), "Error $message", Toast.LENGTH_LONG).show()
-//                    }
-//                }
-//                is ResourceNetwork.Loading->{
-//                    Toast.makeText(requireContext(), "Loading...", Toast.LENGTH_LONG).show()
-//                }
-//            }
         })
     }
 }

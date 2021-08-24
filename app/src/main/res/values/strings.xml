@@ -6,4 +6,5 @@
     <string name="image_details">Image Details</string>
     <string name="button_like">Button Like</string>
     <string name="ingredients">Ingredients</string>
+    <string name="instructions">Instructions</string>
 </resources>

@@ -1,11 +1,9 @@
 package com.diegoribeiro.mealsproject.data.repository
 
-import com.diegoribeiro.mealsproject.data.model.Meal
 import com.diegoribeiro.mealsproject.data.model.Meals
 import com.diegoribeiro.mealsproject.data.model.Recipes
 import com.diegoribeiro.mealsproject.data.remote.RemoteClient
 import retrofit2.Response
-import retrofit2.Retrofit
 
 object Repository {
 

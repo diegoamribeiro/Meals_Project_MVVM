@@ -8,7 +8,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/iv_details"
@@ -26,14 +26,17 @@
             android:id="@+id/tv_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-condensed-medium"
             android:layout_margin="16dp"
             android:layout_marginBottom="16dp"
-            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:textSize="25sp"
             app:layout_constraintBottom_toTopOf="@+id/tv_label_ingredients"
             app:layout_constraintEnd_toStartOf="@+id/iv_favorite"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_details"
-            tools:text="@tools:sample/lorem" />
+            tools:text="@tools:sample/lorem"
+            />
 
         <ImageView
             android:id="@+id/iv_favorite"
@@ -51,36 +54,58 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:layout_marginBottom="16dp"
             android:text="@string/ingredients"
-            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/rv_list"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_title" />
-
-        <TextView
-            android:id="@+id/tv_instructions"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="14dp"
-            android:text="@string/ingredients"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rv_list" />
 
         <com.todkars.shimmer.ShimmerRecyclerView
             android:id="@+id/rv_list"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintBottom_toTopOf="@+id/tv_instructions"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/tv_label_instructions"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_label_ingredients"
             app:shimmer_recycler_item_count="4"
-            app:shimmer_recycler_layout="@layout/placeholder_category_layout"
-            />
+            app:shimmer_recycler_layout="@layout/placeholder_category_layout" />
+
+        <TextView
+            android:id="@+id/tv_label_instructions"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="@string/instructions"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/tv_instructions"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rv_list" />
+
+        <TextView
+            android:id="@+id/tv_instructions"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="14dp"
+            android:justificationMode="inter_word"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="16dp"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_label_instructions" />
 
 
 
