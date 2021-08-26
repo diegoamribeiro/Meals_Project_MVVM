@@ -54,7 +54,6 @@ class RecipeFragment : Fragment() {
         })
     }
 
-
     private fun handleObserver(){
         viewModelRecipes.recipeById.observe(viewLifecycleOwner, { response->
             response.data.let { recipe->

@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.diegoribeiro.mealsproject.data.model.Ingredient
+import com.diegoribeiro.mealsproject.data.model.Recipe
 import com.diegoribeiro.mealsproject.data.model.Recipes
 import com.diegoribeiro.mealsproject.data.remote.ResourceNetwork
 import com.diegoribeiro.mealsproject.data.repository.Repository
@@ -17,7 +18,6 @@ class ViewModelRecipes: ViewModel() {
     var recipeResponse: Recipes? = null
 
     val ingredient: MutableLiveData<List<Ingredient>> = MutableLiveData()
-    //private var mealResponse: Meal? = null
 
     init{
         recipeById
@@ -27,9 +27,8 @@ class ViewModelRecipes: ViewModel() {
         viewModelScope.launch {
             repository.getMealById(id).let { recipes ->
                 recipeById.postValue(handleResponse(recipes))
-
-                //ingredient.postValue(handleResponse(recipes.meals[0].filterBlankIngredient()))
-
+                val ing = recipes.body()
+                ingredient.postValue(ing!!.meals[0].filterBlankIngredient())
             }
         }
     }
