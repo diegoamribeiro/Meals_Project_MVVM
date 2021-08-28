@@ -33,7 +33,6 @@ class ViewModelRecipes: ViewModel() {
         }
     }
 
-
     private fun handleResponse(response: Response<Recipes>): ResourceNetwork<Recipes>{
         if (response.isSuccessful){
             response.body()?.let { resultResponse->
@@ -45,7 +44,4 @@ class ViewModelRecipes: ViewModel() {
         }
         return ResourceNetwork.Error(response.message())
     }
-
-
-
 }

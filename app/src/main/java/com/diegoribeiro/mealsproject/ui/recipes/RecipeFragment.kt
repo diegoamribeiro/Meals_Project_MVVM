@@ -1,7 +1,7 @@
 package com.diegoribeiro.mealsproject.ui.recipes
 
+
 import android.os.Bundle
-import android.os.MessageQueue
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,10 +10,11 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.diegoribeiro.mealsproject.databinding.FragmentRecipeBinding
+import android.annotation.SuppressLint
+import com.diegoribeiro.mealsproject.R
 
 
 class RecipeFragment : Fragment() {
@@ -36,7 +37,7 @@ class RecipeFragment : Fragment() {
         Log.d("***Recipe", args.currentMeal.idMeal)
         setupRecyclerView()
 
-
+        changeColor()
         return binding.root
     }
 
@@ -52,6 +53,15 @@ class RecipeFragment : Fragment() {
                 ingredientAdapter.setData(result)
             }
         })
+    }
+
+    private fun changeColor(){
+        binding.ivFavorite.setOnClickListener {
+            if (){
+
+            }
+        }
+
     }
 
     private fun handleObserver(){

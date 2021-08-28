@@ -1,14 +1,14 @@
 package com.diegoribeiro.mealsproject.ui.categories
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
+import com.diegoribeiro.mealsproject.R
 import com.diegoribeiro.mealsproject.data.remote.ResourceNetwork
 import com.diegoribeiro.mealsproject.databinding.FragmentCategoriesBinding
 
@@ -28,6 +28,7 @@ class CategoriesFragment : Fragment() {
 
         setupRecyclerView()
         observeViewModel()
+        setHasOptionsMenu(true)
 
         return binding.root
     }
@@ -52,6 +53,18 @@ class CategoriesFragment : Fragment() {
                 }
             }
         })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.toolbar_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.menu_favorite -> {findNavController().navigate(R.id.action_categoriesFragment_to_favoriteFragment)}
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun setupRecyclerView(){
