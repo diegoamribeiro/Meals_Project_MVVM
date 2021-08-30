@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:contentDescription="@string/image_details"
-            app:layout_constraintBottom_toTopOf="@+id/iv_favorite"
+            app:layout_constraintBottom_toTopOf="@+id/cb_favorite"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -32,20 +32,18 @@
             android:textColor="@color/black"
             android:textSize="25sp"
             app:layout_constraintBottom_toTopOf="@+id/tv_label_ingredients"
-            app:layout_constraintEnd_toStartOf="@+id/iv_favorite"
+            app:layout_constraintEnd_toStartOf="@+id/cb_favorite"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_details"
             tools:text="@tools:sample/lorem"
             />
 
-        <ImageButton
-            android:id="@+id/iv_favorite"
+        <CheckBox
+            android:id="@+id/cb_favorite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
-            android:contentDescription="@string/button_like"
-            android:src="@drawable/ic_favorite_empty"
-            android:background="@android:color/transparent"
+            app:useMaterialThemeColors="false"
+            android:button="@drawable/selector_favorite"
             app:layout_constraintBottom_toBottomOf="@+id/tv_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tv_title" />

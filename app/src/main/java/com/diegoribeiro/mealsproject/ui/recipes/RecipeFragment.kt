@@ -15,6 +15,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.diegoribeiro.mealsproject.databinding.FragmentRecipeBinding
 import android.annotation.SuppressLint
 import com.diegoribeiro.mealsproject.R
+import com.google.android.material.snackbar.Snackbar
 
 
 class RecipeFragment : Fragment() {
@@ -56,12 +57,13 @@ class RecipeFragment : Fragment() {
     }
 
     private fun changeColor(){
-        binding.ivFavorite.setOnClickListener {
-            if (){
-
+        binding.cbFavorite.setOnCheckedChangeListener { compoundButton, isChecked ->
+            if (isChecked){
+                Snackbar.make(compoundButton, "Recipe added to favorites", Snackbar.LENGTH_SHORT).show()
+            }else{
+                Snackbar.make(compoundButton, "Recipe removed from favorites", Snackbar.LENGTH_SHORT).show()
             }
         }
-
     }
 
     private fun handleObserver(){

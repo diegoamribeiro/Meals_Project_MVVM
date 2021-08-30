@@ -1,18 +1,28 @@
 package com.diegoribeiro.mealsproject.ui.categories
 
+import android.app.Application
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.diegoribeiro.mealsproject.data.local.CategoriesEntity
+import com.diegoribeiro.mealsproject.data.local.LocalRepository
+import com.diegoribeiro.mealsproject.data.local.MealsDao
+import com.diegoribeiro.mealsproject.data.local.MealsDatabase
 import com.diegoribeiro.mealsproject.data.model.Categories
 import com.diegoribeiro.mealsproject.data.remote.ResourceNetwork
 import com.diegoribeiro.mealsproject.data.repository.Repository
+import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
-class ViewModelCategory: ViewModel(){
+class ViewModelCategory(): ViewModel(){
+
     private val repository = Repository
     val listCategory: MutableLiveData<ResourceNetwork<Categories>> = MutableLiveData()
     private var categoryResponse: Categories? = null
+
+    //val readCategories: LiveData<List<CategoriesEntity>>
 
     init {
         getAllCategories()
