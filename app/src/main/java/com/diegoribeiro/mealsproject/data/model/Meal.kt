@@ -4,8 +4,8 @@ import java.io.Serializable
 
 data class Meal(
     val dateModified: Any,
-    val idMeal: String,
-    val strArea: String,
+    var idMeal: String,
+    var strArea: String,
     val strCategory: String,
     val strMeal: String,
     val strMealThumb: String,

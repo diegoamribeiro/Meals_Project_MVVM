@@ -5,10 +5,9 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.diegoribeiro.mealsproject.utils.constants.Constants.DATABASE_NAME
 
 @Database(
-    entities = [CategoriesEntity::class],
+    entities = [MealsEntity::class],
     version = 1,
     exportSchema = false
 )

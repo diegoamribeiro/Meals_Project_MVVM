@@ -1,11 +1,12 @@
 package com.diegoribeiro.mealsproject.ui.recipes
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.diegoribeiro.mealsproject.data.local.LocalRepository
+import com.diegoribeiro.mealsproject.data.local.MealsDao
 import com.diegoribeiro.mealsproject.data.model.Ingredient
-import com.diegoribeiro.mealsproject.data.model.Recipe
+import com.diegoribeiro.mealsproject.data.model.Meal
 import com.diegoribeiro.mealsproject.data.model.Recipes
 import com.diegoribeiro.mealsproject.data.remote.ResourceNetwork
 import com.diegoribeiro.mealsproject.data.repository.Repository
@@ -14,6 +15,8 @@ import retrofit2.Response
 
 class ViewModelRecipes: ViewModel() {
     private var repository = Repository
+    private lateinit var mealsDao: MealsDao
+    private var localRepository = LocalRepository(mealsDao)
     val recipeById: MutableLiveData<ResourceNetwork<Recipes>> = MutableLiveData()
     var recipeResponse: Recipes? = null
 
@@ -31,6 +34,10 @@ class ViewModelRecipes: ViewModel() {
                 ingredient.postValue(ing!!.meals[0].filterBlankIngredient())
             }
         }
+    }
+
+    fun saveMealToFavorite(meal: Meal){
+        //mealsDao.insertMeal(meal)
     }
 
     private fun handleResponse(response: Response<Recipes>): ResourceNetwork<Recipes>{
