@@ -14,7 +14,7 @@ import androidx.room.TypeConverters
 @TypeConverters(MealsTypeConverter::class)
 abstract class MealsDatabase: RoomDatabase() {
 
-    abstract fun getCategoriesDao(): MealsDao
+    abstract fun mealsDao(): MealsDao
 
     companion object{
         @Volatile

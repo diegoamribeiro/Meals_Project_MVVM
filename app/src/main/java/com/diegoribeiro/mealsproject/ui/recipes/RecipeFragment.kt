@@ -14,12 +14,13 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.diegoribeiro.mealsproject.databinding.FragmentRecipeBinding
 import android.annotation.SuppressLint
+import androidx.lifecycle.ViewModelProvider
 import com.diegoribeiro.mealsproject.R
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class RecipeFragment : Fragment() {
-
 
     private lateinit var viewModelRecipes: ViewModelRecipes
     private val args: RecipeFragmentArgs by navArgs()
@@ -32,7 +33,7 @@ class RecipeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentRecipeBinding.inflate(layoutInflater, container, false)
-        viewModelRecipes = ViewModelRecipes()
+        viewModelRecipes = ViewModelProvider(requireActivity()).get(ViewModelRecipes::class.java)
         handleObserver()
         viewModelRecipes.getMealById(args.currentMeal.idMeal)
         Log.d("***Recipe", args.currentMeal.idMeal)

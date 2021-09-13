@@ -1,22 +1,25 @@
 package com.diegoribeiro.mealsproject.ui.recipes
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.diegoribeiro.mealsproject.data.local.LocalRepository
-import com.diegoribeiro.mealsproject.data.local.MealsDao
 import com.diegoribeiro.mealsproject.data.model.Ingredient
 import com.diegoribeiro.mealsproject.data.model.Meal
 import com.diegoribeiro.mealsproject.data.model.Recipes
 import com.diegoribeiro.mealsproject.data.remote.ResourceNetwork
 import com.diegoribeiro.mealsproject.data.repository.Repository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Response
+import javax.inject.Inject
 
-class ViewModelRecipes: ViewModel() {
-    private var repository = Repository
-    private lateinit var mealsDao: MealsDao
-    private var localRepository = LocalRepository(mealsDao)
+@HiltViewModel
+class ViewModelRecipes @Inject constructor(
+    private val repository: Repository,
+    application: Application
+): AndroidViewModel(application)  {
+
     val recipeById: MutableLiveData<ResourceNetwork<Recipes>> = MutableLiveData()
     var recipeResponse: Recipes? = null
 
@@ -28,7 +31,7 @@ class ViewModelRecipes: ViewModel() {
 
     fun getMealById(id: String){
         viewModelScope.launch {
-            repository.getMealById(id).let { recipes ->
+            repository.remote.getAllMealsById(id).let { recipes ->
                 recipeById.postValue(handleResponse(recipes))
                 val ing = recipes.body()
                 ingredient.postValue(ing!!.meals[0].filterBlankIngredient())

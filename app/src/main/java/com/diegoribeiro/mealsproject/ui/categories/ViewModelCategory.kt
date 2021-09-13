@@ -1,20 +1,28 @@
 package com.diegoribeiro.mealsproject.ui.categories
 
+
+import android.app.Application
+import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.diegoribeiro.mealsproject.data.model.Categories
 import com.diegoribeiro.mealsproject.data.remote.ResourceNetwork
 import com.diegoribeiro.mealsproject.data.repository.Repository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Response
+import javax.inject.Inject
 
-class ViewModelCategory: ViewModel(){
+@HiltViewModel
+class ViewModelCategory @Inject constructor(
+    private val repository: Repository,
+    application: Application
+): AndroidViewModel(application){
 
-    private val repository = Repository
     val listCategory: MutableLiveData<ResourceNetwork<Categories>> = MutableLiveData()
     private var categoryResponse: Categories? = null
-
 
     init {
         getAllCategories()
@@ -23,7 +31,7 @@ class ViewModelCategory: ViewModel(){
     private fun getAllCategories() {
         viewModelScope.launch {
             listCategory.postValue(ResourceNetwork.Loading())
-            val response = repository.getAllCategories()
+            val response = repository.remote.getCategories()
             listCategory.postValue(handleCategoryResponse(response))
         }
     }

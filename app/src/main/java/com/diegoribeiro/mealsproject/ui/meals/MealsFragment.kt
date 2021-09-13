@@ -7,13 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.diegoribeiro.mealsproject.data.remote.ResourceNetwork
 import com.diegoribeiro.mealsproject.databinding.FragmentMealsBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class MealsFragment : Fragment() {
 
     private val mAdapterMeals: AdapterMeals by lazy { AdapterMeals() }
@@ -26,7 +28,7 @@ class MealsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        viewModel = ViewModelMeals()
+        viewModel = ViewModelProvider(requireActivity()).get(ViewModelMeals::class.java)
         binding = FragmentMealsBinding.inflate(layoutInflater, container, false)
         setupRecyclerView()
         loadViewModel()

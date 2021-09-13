@@ -1,13 +1,11 @@
-package com.diegoribeiro.mealsproject.data.di
+package com.diegoribeiro.mealsproject.di
 
-import com.diegoribeiro.mealsproject.data.local.MealsDao
 import com.diegoribeiro.mealsproject.data.remote.MealsApi
 import com.diegoribeiro.mealsproject.utils.constants.Constants.BASE_URL
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.internal.managers.ApplicationComponentManager
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -54,28 +52,28 @@ object NetworkModule {
         return retrofit.create(MealsApi::class.java)
     }
 
-    fun getService(): MealsApi {
-        val logging = HttpLoggingInterceptor()
-        logging.level = HttpLoggingInterceptor.Level.BODY
-
-        val httpClient = OkHttpClient.Builder()
-        httpClient.addInterceptor(logging)
-        httpClient.addInterceptor { chain ->
-            val original = chain.request()
-            val originalHttpUrl = original.url
-            val url = originalHttpUrl.newBuilder()
-                .build()
-
-            chain.proceed(original.newBuilder().url(url).build())
-        }
-
-        val gson = GsonBuilder().setLenient().create()
-        val retrofit = Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create(gson))
-            .client(httpClient.build())
-            .build()
-
-        return retrofit.create(MealsApi::class.java)
-    }
+//    fun getService(): MealsApi {
+//        val logging = HttpLoggingInterceptor()
+//        logging.level = HttpLoggingInterceptor.Level.BODY
+//
+//        val httpClient = OkHttpClient.Builder()
+//        httpClient.addInterceptor(logging)
+//        httpClient.addInterceptor { chain ->
+//            val original = chain.request()
+//            val originalHttpUrl = original.url
+//            val url = originalHttpUrl.newBuilder()
+//                .build()
+//
+//            chain.proceed(original.newBuilder().url(url).build())
+//        }
+//
+//        val gson = GsonBuilder().setLenient().create()
+//        val retrofit = Retrofit.Builder()
+//            .baseUrl(BASE_URL)
+//            .addConverterFactory(GsonConverterFactory.create(gson))
+//            .client(httpClient.build())
+//            .build()
+//
+//        return retrofit.create(MealsApi::class.java)
+//    }
 }

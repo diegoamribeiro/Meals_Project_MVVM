@@ -1,20 +1,15 @@
 package com.diegoribeiro.mealsproject.data.repository
 
-import com.diegoribeiro.mealsproject.data.model.Meals
-import com.diegoribeiro.mealsproject.data.model.Recipes
-import com.diegoribeiro.mealsproject.data.di.NetworkModule
-import retrofit2.Response
+import com.diegoribeiro.mealsproject.data.remote.RemoteDataSource
+import dagger.hilt.android.scopes.ActivityRetainedScoped
+import javax.inject.Inject
 
-object Repository {
+@ActivityRetainedScoped
+class Repository @Inject constructor(
+    remoteDataSource: RemoteDataSource
+){
 
-    suspend fun getAllCategories() = NetworkModule.getService().getAllCategories()
+    val remote = remoteDataSource
 
-    suspend fun getAllMealsByCategory(category: String): Response<Meals>{
-       return NetworkModule.getService().getAllMealsByCategory(category)
-    }
-
-    suspend fun getMealById(id: String): Response<Recipes>{
-        return NetworkModule.getService().getAllMealsById(id)
-    }
 
 }

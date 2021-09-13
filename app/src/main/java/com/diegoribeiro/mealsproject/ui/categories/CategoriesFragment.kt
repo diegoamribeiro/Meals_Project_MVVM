@@ -7,11 +7,15 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.diegoribeiro.mealsproject.R
 import com.diegoribeiro.mealsproject.data.remote.ResourceNetwork
 import com.diegoribeiro.mealsproject.databinding.FragmentCategoriesBinding
+import dagger.hilt.EntryPoint
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class CategoriesFragment : Fragment() {
 
     private val mAdapter: AdapterCategory by lazy { AdapterCategory() }
@@ -23,7 +27,7 @@ class CategoriesFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        viewModelCategory = ViewModelCategory()
+        viewModelCategory = ViewModelProvider(requireActivity()).get(ViewModelCategory::class.java)
         binding = FragmentCategoriesBinding.inflate(inflater, container, false)
 
         setupRecyclerView()
