@@ -11,7 +11,7 @@ class RemoteDataSource @Inject constructor(
         return mealsApi.getAllCategories()
     }
 
-    suspend fun getAllMealsCategory(category: String): Response<Meals>{
+    suspend fun getAllMealsByCategory(category: String): Response<Meals>{
         return mealsApi.getAllMealsByCategory(category)
     }
 

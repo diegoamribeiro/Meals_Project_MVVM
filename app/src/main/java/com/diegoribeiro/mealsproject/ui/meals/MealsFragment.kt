@@ -7,13 +7,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.diegoribeiro.mealsproject.data.remote.ResourceNetwork
 import com.diegoribeiro.mealsproject.databinding.FragmentMealsBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MealsFragment : Fragment() {
@@ -31,7 +34,8 @@ class MealsFragment : Fragment() {
         viewModel = ViewModelProvider(requireActivity()).get(ViewModelMeals::class.java)
         binding = FragmentMealsBinding.inflate(layoutInflater, container, false)
         setupRecyclerView()
-        loadViewModel()
+        readDatabase()
+
 
         Toast.makeText(requireContext(), args.currentCategory.strCategory, Toast.LENGTH_LONG).show()
         return binding.root
@@ -45,21 +49,45 @@ class MealsFragment : Fragment() {
         }
     }
 
-    private fun loadViewModel() {
+    private fun readDatabase() {
+        Log.d("***readDatabase", "readDatabase called")
+        lifecycleScope.launch {
+            viewModel.readMeals.observe(viewLifecycleOwner,  {mealsDatabase ->
+                if (mealsDatabase.isNotEmpty()){
+                    mAdapterMeals.setData(mealsDatabase[0].meals.meal)
+                    binding.rvMeals.hideShimmer()
+                }else{
+                    requestApiData()
+                }
+            })
+        }
+    }
+
+    private fun loadDataFromCache(){
+        lifecycleScope.launch {
+            viewModel.readMeals.observe(viewLifecycleOwner, { database->
+                if (database.isNotEmpty()){
+                    mAdapterMeals.setData(database[0].meals.meal)
+                }
+            })
+        }
+    }
+
+    private fun requestApiData() {
+        Log.d("***requestApiData", "requestApiData called")
         viewModel.getMealsByCategory(args.currentCategory.strCategory)
         viewModel.listMeals.observe(viewLifecycleOwner, { response ->
             when (response) {
                 is ResourceNetwork.Success -> {
                     binding.rvMeals.hideShimmer()
                     response.data?.let { result ->
-                        mAdapterMeals.setData(result.meals)
+                        mAdapterMeals.setData(result.meal)
                     }
                 }
                 is ResourceNetwork.Error -> {
-                    response.message?.let { message ->
-                        binding.rvMeals.hideShimmer()
-                        Toast.makeText(requireContext(), "Error $message", Toast.LENGTH_LONG).show()
-                    }
+                    binding.rvMeals.hideShimmer()
+                    loadDataFromCache()
+                    Toast.makeText(requireContext(), "Error ${response.message}", Toast.LENGTH_LONG).show()
                 }
                 is ResourceNetwork.Loading -> {
                     binding.rvMeals.showShimmer()

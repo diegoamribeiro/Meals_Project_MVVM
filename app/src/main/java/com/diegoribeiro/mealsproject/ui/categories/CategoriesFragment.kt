@@ -38,7 +38,7 @@ class CategoriesFragment : Fragment() {
     }
 
     private fun observeViewModel() {
-        viewModelCategory.listCategory.observe(viewLifecycleOwner, Observer {response ->
+        viewModelCategory.listCategory.observe(viewLifecycleOwner,  {response ->
             when(response){
                 is ResourceNetwork.Success->{
                     binding.rvList.hideShimmer()

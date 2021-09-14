@@ -9,12 +9,13 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.diegoribeiro.mealsproject.R
 import com.diegoribeiro.mealsproject.data.model.Meal
+import com.diegoribeiro.mealsproject.data.model.Meals
 import com.diegoribeiro.mealsproject.databinding.MealsItemBinding
 import com.diegoribeiro.mealsproject.utils.DiffUtilGeneric
 
 class AdapterMeals: RecyclerView.Adapter<AdapterMeals.MealsViewHolder>() {
 
-    private var mealsList = emptyList<Meal>()
+    private var mealsList = listOf<Meal>()
 
     class MealsViewHolder(val binding: MealsItemBinding): RecyclerView.ViewHolder(binding.root)
 
