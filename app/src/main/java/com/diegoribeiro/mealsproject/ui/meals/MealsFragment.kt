@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
@@ -15,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.diegoribeiro.mealsproject.data.remote.ResourceNetwork
 import com.diegoribeiro.mealsproject.databinding.FragmentMealsBinding
+import com.diegoribeiro.mealsproject.utils.observeOnce
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -50,24 +50,24 @@ class MealsFragment : Fragment() {
     }
 
     private fun readDatabase() {
-        Log.d("***readDatabase", "readDatabase called")
-        lifecycleScope.launch {
-            viewModel.readMeals.observe(viewLifecycleOwner,  {mealsDatabase ->
-                if (mealsDatabase.isNotEmpty()){
-                    mAdapterMeals.setData(mealsDatabase[0].meals.meal)
-                    binding.rvMeals.hideShimmer()
-                }else{
-                    requestApiData()
-                }
-            })
-        }
+            lifecycleScope.launch {
+                viewModel.readMeals.observeOnce(viewLifecycleOwner,  {mealsDatabase ->
+                    Log.d("***readDatabase", "readDatabase called")
+                    if (mealsDatabase.isNotEmpty()){
+                        mAdapterMeals.setData(mealsDatabase[0].meals.meals)
+                        binding.rvMeals.hideShimmer()
+                    }else{
+                        requestApiData()
+                    }
+                })
+            }
     }
 
     private fun loadDataFromCache(){
         lifecycleScope.launch {
             viewModel.readMeals.observe(viewLifecycleOwner, { database->
                 if (database.isNotEmpty()){
-                    mAdapterMeals.setData(database[0].meals.meal)
+                    mAdapterMeals.setData(database[0].meals.meals)
                 }
             })
         }
@@ -81,7 +81,7 @@ class MealsFragment : Fragment() {
                 is ResourceNetwork.Success -> {
                     binding.rvMeals.hideShimmer()
                     response.data?.let { result ->
-                        mAdapterMeals.setData(result.meal)
+                        mAdapterMeals.setData(result.meals)
                     }
                 }
                 is ResourceNetwork.Error -> {

@@ -19,7 +19,7 @@ class ViewModelMeals @Inject constructor(
 ): AndroidViewModel(application) {
 
     /** ROOM DATABASE */
-    val readMeals: LiveData<List<MealsEntity>> = repository.local.readDatabase().asLiveData()
+    val readMeals: LiveData<List<MealsEntity>> = repository.local.readMealsDatabase().asLiveData()
 
     private fun insertMeals(mealsEntity: MealsEntity) =
         viewModelScope.launch(Dispatchers.IO) {

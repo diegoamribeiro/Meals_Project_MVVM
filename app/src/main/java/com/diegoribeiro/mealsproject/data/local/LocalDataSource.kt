@@ -9,11 +9,19 @@ class LocalDataSource @Inject constructor(
     private val mealsDao: MealsDao
 ){
 
-    fun readDatabase(): Flow<List<MealsEntity>>{
+    fun readMealsDatabase(): Flow<List<MealsEntity>>{
         return mealsDao.readMeals()
     }
 
     suspend fun insertMeals(mealsEntity: MealsEntity){
         mealsDao.insertMeal(mealsEntity)
+    }
+
+    fun readCategoriesDatabase(): Flow<List<CategoriesEntity>>{
+        return mealsDao.readCategories()
+    }
+
+    suspend fun insertCategories(categoriesEntity: CategoriesEntity){
+        return mealsDao.insertCategory(categoriesEntity)
     }
 }

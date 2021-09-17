@@ -15,7 +15,7 @@ import com.diegoribeiro.mealsproject.utils.DiffUtilGeneric
 
 class AdapterMeals: RecyclerView.Adapter<AdapterMeals.MealsViewHolder>() {
 
-    private var mealsList = listOf<Meal>()
+    private var mealsList = emptyList<Meal>()
 
     class MealsViewHolder(val binding: MealsItemBinding): RecyclerView.ViewHolder(binding.root)
 
